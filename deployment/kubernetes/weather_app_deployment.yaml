@@ -1,0 +1,35 @@
+# weather_app_deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-app-deployment
+  labels:
+    app: weather-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: weather-app
+  template:
+    metadata:
+      labels:
+        app: weather-app
+    spec:
+      containers:
+      - name: weather-app
+        image: weather-app:latest
+        ports:
+        - containerPort: 5000
+        - containerPort: 8080
+        env:
+        - name: DEBUG
+          value: "True"
+        - name: SECRET_KEY
+          value: "supersecretkey"
+        - name: TWILIO_ACCOUNT_SID
+          value: "your_account_sid_here"
+        - name: TWILIO_AUTH_TOKEN
+          value: "your_auth_token_here"
+        - name: TWILIO_PHONE_NUMBER
+          value: "+1234567890"
